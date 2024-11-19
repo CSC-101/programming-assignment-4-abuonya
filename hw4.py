@@ -16,7 +16,16 @@ def filter_state():
         if county.state == sys.argv[1]:
             print(county)
 
-def all_operations(given_operation)
+def all_operations():
+    try:
+        given_operation = sys.argv[1]
+    except IndexError:
+        print("Could not access the file provided.")
+        sys.exit(1)
+
+    with open(given_operation, "r"):
+        for line in
+
 
 if __name__ == "__main__":
     given_operation = sys.argv[1]
