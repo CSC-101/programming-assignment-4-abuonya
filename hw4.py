@@ -2,7 +2,7 @@ import sys
 from data import CountyDemographics
 import build_data
 import argparse
-
+# Make sure config actually points to correct
 
 
 
@@ -31,13 +31,15 @@ def all_operations():
     counties = build_data.get_data()
 
     for operation in operations:
+        operation = operation.strip()
+
         if "display" in operation:
             display(counties)
 
         elif "filter-state" in operation:
             component = operation.split(":")[1]
-            filter_state(counties, component)
-            display(counties)
+            x = filter_state(counties, component)
+            display(x)
 
 
 if __name__ == "__main__":
