@@ -12,14 +12,12 @@ def display(counties):
         print(f"{county.county} {county.age} {county.education} {county.ethnicities} {county.income} {county.state}")
 
 def filter_state(counties, state):
-    filtered_by_state = []
     count = 0
     for county in counties:
         if county.state == state:
-            filtered_by_state.append(county)
             count += 1
-    print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries"+")")
-    return filtered_by_state
+    filtered_state_count = print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries"+")")
+    return filtered_state_count
 
 def all_operations():
     try:
@@ -41,8 +39,7 @@ def all_operations():
 
         elif "filter-state" in operation:
             component = operation.split(":")[1]         # Separate operation from component; filter-state and *state abbr*
-            filtered_states = filter_state(counties, component)
-            display(filtered_states)
+            filter_state(counties, component)
 
 if __name__ == "__main__":
     all_operations()
