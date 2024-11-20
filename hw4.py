@@ -95,7 +95,43 @@ def population_total(counties: list):
         temp = county.population['2014 Population']
         sum_of_2014_population += temp
     print("2014 Population:" + " " + str(sum_of_2014_population))
+    return sum_of_2014_population
 
+
+def population(counties, field):
+    sub_population_total = 0.0
+    total_2014_population = population_total(build_data.get_data())
+
+    for county in counties:
+        field_key = field.split(".")
+        try:
+            if len(field_key) > 1:
+                if field_key[0] == 'age':
+                    value = county.age.get(field_key[1])  # Where field_key[0] is the class attribute.
+                elif field_key[0] == 'county':
+                    value = county.county.get(field_key[1])
+                elif field_key[0] == 'Education':
+                    value = county.education.get(field_key[1])
+                elif field_key[0] == 'ethnicities':
+                    value = county.ethnicities.get(field_key[1])
+                elif field_key[0] == 'income':
+                    value = county.income.get(field_key[1])
+                elif field_key[0] == 'population':
+                    value = county.population.get(field_key[1])
+                elif field_key[0] == 'state':
+                    value = county.state.get(field_key[1])
+                else:
+                    value = None
+        except (IndexError, KeyError):
+            value = None
+
+    if value is not None and value in counties:
+        sub_pop_per_county = total_2014_population * (value / 100)
+        sub_population_total += sub_pop_per_county
+    print("2014" + " " + field + "Population:" + " " + str(sub_population_total))
+    return sub_population_total
+
+# Main Module
 
 def all_operations():
     try:
@@ -130,8 +166,13 @@ def all_operations():
             counties = filter_lt(counties, field, lt_value)
 
         elif "population-total" in operation:
-            counties = build_data.get_data()
             population_total(counties)
+
+        elif "population:" in operation:
+            field = operation.split(":")[1]
+            population(counties, field)
+
+
 
 
 if __name__ == "__main__":
