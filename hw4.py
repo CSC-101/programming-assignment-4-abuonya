@@ -1,8 +1,8 @@
-import sys
+import sys          # Make sure config actually points to correct working directory
 from data import CountyDemographics
 import build_data
 import argparse
-# Make sure config actually points to correct
+
 
 
 
@@ -16,8 +16,18 @@ def filter_state(counties, state):
     for county in counties:
         if county.state == state:
             count += 1
-    filtered_state_count = print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries"+")")
-    return filtered_state_count
+    print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries" + ")")
+
+def filter_gt(counties, field, gt_value):
+    count = 0
+    key = field.split(".")
+    for county in counties:
+
+"""
+        if key in county and key > gt_value:
+            count += 1
+    print("Filter: " + " " + field + " "  + "(" + str(count) + " entries" + ")")
+"""
 
 def all_operations():
     try:
@@ -40,6 +50,12 @@ def all_operations():
         elif "filter-state" in operation:
             component = operation.split(":")[1]         # Separate operation from component; filter-state and *state abbr*
             filter_state(counties, component)
+
+        elif "filter-gt" in operation:
+            field = operation.split(":")[1]
+            gt_value = operation.split(":")[2]
+            filter_gt(counties, field, gt_value)
+
 
 if __name__ == "__main__":
     all_operations()
