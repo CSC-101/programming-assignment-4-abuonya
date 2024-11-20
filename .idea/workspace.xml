@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a67898af-fe18-4c95-89e1-c0c598ba280f" name="Changes" comment="commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hw4.py" beforeDir="false" afterPath="$PROJECT_DIR$/hw4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inputs/bachelors_gt_60.ops" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/bachelors_gt_60.ops" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +68,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hw4.py" />
-      <option name="PARAMETERS" value="filter_state.ops" />
+      <option name="PARAMETERS" value="bachelors_gt_60.ops" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -149,7 +149,39 @@
       <option name="project" value="LOCAL" />
       <updated>1732041075609</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="commit">
+      <option name="closed" value="true" />
+      <created>1732067158207</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732067158207</updated>
+    </task>
+    <task id="LOCAL-00009" summary="commit">
+      <option name="closed" value="true" />
+      <created>1732067393461</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732067393461</updated>
+    </task>
+    <task id="LOCAL-00010" summary="commit">
+      <option name="closed" value="true" />
+      <created>1732067619398</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732067619398</updated>
+    </task>
+    <task id="LOCAL-00011" summary="commit">
+      <option name="closed" value="true" />
+      <created>1732068300543</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1732068300543</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -162,7 +194,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hw4.py</url>
-          <line>40</line>
+          <line>59</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
