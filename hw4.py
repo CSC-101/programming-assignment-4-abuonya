@@ -20,8 +20,24 @@ def filter_state(counties, state):
 
 def filter_gt(counties, field, gt_value):
     count = 0
-    key = field.split(".")
+    field_key = field.split(".")
     for county in counties:
+        if field_key[0] == 'age':
+            value = county.age
+        elif field_key[0] == 'county':
+            value = county.county
+        elif field_key[0] == 'education':
+            value = county.education
+        elif field_key[0] == 'ethnicities':
+            value = county.ethnicities
+        elif key[0] == 'income':
+            value = county.income
+        elif key[0] == 'population':
+            value = county.population
+        elif key[0] == 'state':
+            value = county.state
+
+    for
 
 """
         if key in county and key > gt_value:
