@@ -7,18 +7,18 @@ import argparse
 
 
 # make pretty later ************************
-def display(counties):
+def display(counties:list[CountyDemographics]):
     for county in counties:
         print(f"{county.county} {county.age} {county.education} {county.ethnicities} {county.income} {county.state}")
 
-def filter_state(counties, state):
+def filter_state(counties:list[CountyDemographics], state:str):
     count = 0
     for county in counties:
         if county.state == state:
             count += 1
     print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries" + ")")
 
-def filter_gt(counties, field, gt_value):
+def filter_gt(counties, field, gt_value) -> list:
     count = 0
     gt_filtered_counties = []
     new_gt_value = float(gt_value)
@@ -53,7 +53,7 @@ def filter_gt(counties, field, gt_value):
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return gt_filtered_counties
 
-def filter_gt(counties, field, gt_value):
+def filter_lt(counties:list[CountyDemographics], field:str, gt_value:str) -> list:
     count = 0
     lt_filtered_counties = []
     new_lt_value = float(gt_value)
@@ -88,6 +88,14 @@ def filter_gt(counties, field, gt_value):
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return lt_filtered_counties
 
+def population_total(counties: list):
+    sum_of_2014_population = 0
+
+    for county in counties:
+        temp = county.population['2014 Population']
+        sum_of_2014_population += temp
+    print("2014 Population:" + " " + str(sum_of_2014_population))
+
 
 def all_operations():
     try:
@@ -119,7 +127,12 @@ def all_operations():
         elif "filter-lt" in operation:
             field = operation.split(":")[1]
             lt_value = operation.split(":")[2]
-            counties = filter_gt(counties, field, lt_value)
+            counties = filter_lt(counties, field, lt_value)
+
+        elif "population-total" in operation:
+            counties = build_data.get_data()
+            population_total(counties)
+
 
 if __name__ == "__main__":
     all_operations()
