@@ -30,20 +30,21 @@ def filter_gt(counties, field, gt_value):
             value = county.education
         elif field_key[0] == 'ethnicities':
             value = county.ethnicities
-        elif key[0] == 'income':
+        elif field_key[0] == 'income':
             value = county.income
-        elif key[0] == 'population':
+        elif field_key[0] == 'population':
             value = county.population
-        elif key[0] == 'state':
+        elif field_key[0] == 'state':
             value = county.state
 
-    for
+    for key in field_key:
+        value = value[key]
 
-"""
-        if key in county and key > gt_value:
-            count += 1
+    if value > gt_value:
+        count += 1
+
     print("Filter: " + " " + field + " "  + "(" + str(count) + " entries" + ")")
-"""
+
 
 def all_operations():
     try:
