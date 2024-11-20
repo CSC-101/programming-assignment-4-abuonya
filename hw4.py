@@ -20,35 +20,38 @@ def filter_state(counties, state):
 
 def filter_gt(counties, field, gt_value):
     count = 0
-    field_key = field.split(".")
+    filtered_counties = []
     new_gt_value = float(gt_value)
 
     for county in counties:
-        if field_key[0] == 'age':
-            value = county.age
-        elif field_key[0] == 'county':
-            value = county.county
-        elif field_key[0] == 'Education':
-            value = county.education
-        elif field_key[0] == 'ethnicities':
-            value = county.ethnicities
-        elif field_key[0] == 'income':
-            value = county.income
-        elif field_key[0] == 'population':
-            value = county.population
-        elif field_key[0] == 'state':
-            value = county.state
+        field_key = field.split(".")
 
-        for key in field_key[1:]:
-            try:
-                    value = value[key]
-            except (KeyError, IndexError):
-                value = None
+        try:
+            if len(field_key) > 1:
+                if field_key[0] == 'age':
+                    value = county.age.get(field_key[1])
+                elif field_key[0] == 'county':
+                    value = county.county.get(field_key[1])
+                elif field_key[0] == 'Education':
+                    value = county.education.get(field_key[1])
+                elif field_key[0] == 'ethnicities':
+                    value = county.ethnicities.get(field_key[1])
+                elif field_key[0] == 'income':
+                    value = county.income.get(field_key[1])
+                elif field_key[0] == 'population':
+                    value = county.population.get(field_key[1])
+                elif field_key[0] == 'state':
+                    value = county.state.get(field_key[1])
+                else:
+                    value = None
+        except (IndexError, KeyError):
+            value = None
 
         if value is not None and value > new_gt_value:
             count += 1
-
-    print("Filter: " + " " + field + " "  + "(" + str(count) + " entries" + ")")
+            filtered_counties.append(county)
+    print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
+    return filtered_counties
 
 
 def all_operations():
@@ -76,7 +79,7 @@ def all_operations():
         elif "filter-gt" in operation:
             field = operation.split(":")[1]
             gt_value = operation.split(":")[2]
-            filter_gt(counties, field, gt_value)
+            counties = filter_gt(counties, field, gt_value)
 
 
 if __name__ == "__main__":
