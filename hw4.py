@@ -98,6 +98,7 @@ def population_total(counties: list):
     return sum_of_2014_population
 
 
+
 def population(counties, field):
     sub_population_total = 0.0
     field_key = field.split(".")
@@ -127,10 +128,9 @@ def population(counties, field):
     print("2014" + " " + field + "Population:" + " " + str(sub_population_total))
     return sub_population_total
 
-def percent(counties, field):
-    sub_population_total_percent = 0.0
-    sub_population_total = 0.0
 
+def percent(counties, field, sub_pop, total_population):
+    sub_population_total_percent = 0.
     field_key = field.split(".")
 
     for county in counties:
@@ -151,12 +151,9 @@ def percent(counties, field):
         else:
             value = None
 
-        total_2014_population_for_sub_pop = county.population['2014 Population']
-        sub_pop_per_county = total_2014_population_for_sub_pop * (value / 100)
-        sub_population_total += sub_pop_per_county
-        sub_population_total_percent = (sub_population_total / total_2014_population_for_sub_pop) * 100
+        sub_population_total_percent = (sub_pop / total_population) * 100
 
-    print("2014" + " " + field + "Population:" + " " + str(sub_population_total_percent))
+    #print("2014" + " " + field + "Population:" + " " + str(sub_population_total_percent))
     return percent
 
 # Main Module
@@ -198,11 +195,14 @@ def all_operations():
 
         elif "population:" in operation:
             field = operation.split(":")[1]
-            population(counties, field)
+            sub_population_total = population(counties, field)
+            print("2014" + " " + field + "Population:" + " " + str(sub_population_total))
 
         elif "percent:" in operation:
             field = operation.split(":")[1]
-            percent(counties, field)
+            sub_pop = population(counties, field)
+            total_population = population_total(counties)
+            percent(counties, field, sub_pop, total_population)
 
 
 
