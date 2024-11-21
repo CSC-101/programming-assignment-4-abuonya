@@ -94,37 +94,35 @@ def population_total(counties: list):
     for county in counties:
         temp = county.population['2014 Population']
         sum_of_2014_population += temp
-    # print("2014 Population:" + " " + str(sum_of_2014_population))
+    print("2014 Population:" + " " + str(sum_of_2014_population))
     return sum_of_2014_population
 
 
 def population(counties, field):
     sub_population_total = 0.0
-    total_2014_population = 318857056
+    field_key = field.split(".")
 
     for county in counties:
-        field_key = field.split(".")
-        if len(field_key) > 1:
-            if field_key[0] == 'age':
-                value = county.age.get(field_key[1])  # Where field_key[0] is the class attribute.
-            elif field_key[0] == 'county':
+        if field_key[0] == 'Age':
+            value = county.age.get(field_key[1]) # Where field_key[0] is the class attribute.
+        elif field_key[0] == 'County':
                 value = county.county.get(field_key[1])
-            elif field_key[0] == 'Education':
+        elif field_key[0] == 'Education':
                 value = county.education.get(field_key[1])
-            elif field_key[0] == 'Ethnicities':
-                value = county.ethnicities.get(field_key[1])
-            elif field_key[0] == 'Income':
+        elif field_key[0] == 'Ethnicities':
+            value = county.ethnicities.get(field_key[1])
+        elif field_key[0] == 'Income':
                 value = county.income.get(field_key[1])
-            elif field_key[0] == 'population':
-                value = county.population.get(field_key[1])
-            elif field_key[0] == 'state':
-                value = county.state.get(field_key[1])
-            else:
-                value = None
+        elif field_key[0] == 'Population':
+            value = county.population.get(field_key[1])
+        elif field_key[0] == 'State':
+            value = county.state.get(field_key[1])
+        else:
+            value = None
 
-            if value is not None:
-                sub_pop_per_county = total_2014_population * (value / 100)
-                sub_population_total += sub_pop_per_county
+        total_2014_population = county.population['2014 Population']
+        sub_pop_per_county = total_2014_population * (value / 100)
+        sub_population_total += sub_pop_per_county
 
     print("2014" + " " + field + "Population:" + " " + str(sub_population_total))
     return sub_population_total
