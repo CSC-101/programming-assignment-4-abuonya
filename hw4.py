@@ -28,19 +28,19 @@ def filter_gt(counties, field, gt_value) -> list:
 
         try:
             if len(field_key) > 1:
-                if field_key[0] == 'age':
+                if field_key[0] == 'Age':
                     value = county.age.get(field_key[1])
-                elif field_key[0] == 'county':
+                elif field_key[0] == 'County':
                     value = county.county.get(field_key[1])
                 elif field_key[0] == 'Education':
                     value = county.education.get(field_key[1])
-                elif field_key[0] == 'ethnicities':
+                elif field_key[0] == 'Ethnicities':
                     value = county.ethnicities.get(field_key[1])
                 elif field_key[0] == 'income':
                     value = county.income.get(field_key[1])
-                elif field_key[0] == 'population':
+                elif field_key[0] == 'Population':
                     value = county.population.get(field_key[1])
-                elif field_key[0] == 'state':
+                elif field_key[0] == 'State':
                     value = county.state.get(field_key[1])
                 else:
                     value = None
