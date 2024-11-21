@@ -53,29 +53,29 @@ def filter_gt(counties, field, gt_value) -> list:
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return gt_filtered_counties
 
-def filter_lt(counties:list[CountyDemographics], field:str, gt_value:str) -> list:
+def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> list:
     count = 0
     lt_filtered_counties = []
-    new_lt_value = float(gt_value)
+    new_lt_value = float(lt_value)
 
     for county in counties:
         field_key = field.split(".")
 
         try:
             if len(field_key) > 1:
-                if field_key[0] == 'age':
+                if field_key[0] == 'Age':
                     value = county.age.get(field_key[1])  # Where field_key[0] is the class attribute.
-                elif field_key[0] == 'county':
+                elif field_key[0] == 'County':
                     value = county.county.get(field_key[1])
                 elif field_key[0] == 'Education':
                     value = county.education.get(field_key[1])
-                elif field_key[0] == 'ethnicities':
+                elif field_key[0] == 'Ethnicities':
                     value = county.ethnicities.get(field_key[1])
-                elif field_key[0] == 'income':
+                elif field_key[0] == 'Income':
                     value = county.income.get(field_key[1])
-                elif field_key[0] == 'population':
+                elif field_key[0] == 'Population':
                     value = county.population.get(field_key[1])
-                elif field_key[0] == 'state':
+                elif field_key[0] == 'State':
                     value = county.state.get(field_key[1])
                 else:
                     value = None
@@ -88,7 +88,7 @@ def filter_lt(counties:list[CountyDemographics], field:str, gt_value:str) -> lis
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return lt_filtered_counties
 
-def population_total(counties: list):
+def population_total(counties: list) -> float:
     sum_of_2014_population = 0
 
     for county in counties:
@@ -98,8 +98,7 @@ def population_total(counties: list):
     return sum_of_2014_population
 
 
-
-def population(counties, field):
+def population(counties, field) -> float:
     sub_population_total = 0.0
     field_key = field.split(".")
 
@@ -128,7 +127,7 @@ def population(counties, field):
     return sub_population_total
 
 
-def percent(sub_pop, total_population):
+def percent(sub_pop, total_population) -> float:
     sub_population_total_percent = (sub_pop / total_population) * 100
 
     return sub_population_total_percent
