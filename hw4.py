@@ -1,12 +1,11 @@
-import sys          # Make sure config actually points to correct working directory
-from types import NoneType
-
+import sys
 from data import CountyDemographics
 import build_data
-import argparse
 
 
-
+# Make sure config actually points to correct working directory.
+# Make sure script parameter is correctly spelt.
+# Make display pretty later / more user-friendly.
 
 # Purpose of Function: This function 'display' iterates through the entire list of counties and prints every counties information to the terminal.
 def display(counties:list[CountyDemographics]) -> None:
@@ -61,6 +60,7 @@ def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> lis
         if value is not None and value > new_gt_value:
             count += 1
             gt_filtered_counties.append(county)
+
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return gt_filtered_counties
 
@@ -98,6 +98,7 @@ def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> lis
         if value is not None and value < new_lt_value:
             count += 1
             lt_filtered_counties.append(county)
+
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return lt_filtered_counties
 
@@ -105,9 +106,12 @@ def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> lis
 def population_total(counties:list[CountyDemographics]) -> float:
     sum_of_2014_population = 0 # To store the sum of the total 2014 population across all counties.
 
-    for county in counties:
-        temp = county.population['2014 Population']
-        sum_of_2014_population += temp
+    try:
+        for county in counties:
+            temp = county.population['2014 Population']
+            sum_of_2014_population += temp
+    except ValueError:
+        print("There was an issue.")
 
     return sum_of_2014_population
 
@@ -142,24 +146,23 @@ def population(counties:list[CountyDemographics], field:str) -> float:
 
     return sub_population_total
 
+# Purpose of Function: This function 'percent' takes the subpopulation total and converts it into a percent.
 def percent(sub_pop, total_population) -> float:
-    sub_population_total_percent = (sub_pop / total_population) * 100
-
+    sub_population_total_percent = (sub_pop / total_population) * 100       # Uses helper functions population and population_total for percent computation - refer to all_functions() to see.
     return sub_population_total_percent
 
-# Main Module
-
-def all_operations():
+# Compile All Function Into One to check the file for any of these operations.
+def all_operations() -> None:
     try:
         given_operation = sys.argv[1]           # Take first argument from the command line.
     except IndexError:
         print("Could not access the file provided.")
         sys.exit(1)
 
-    with open(given_operation, "r") as temporary:
-        operations = temporary.readlines()
+    with open(given_operation, "r") as temporary:       # First, open the file.
+        operations = temporary.readlines()              # Read the file you just opened.
 
-    counties = build_data.get_data()
+    counties = build_data.get_data()                    # Define counties within the scope of this function for general usage of counties without any specified fields.
 
     for operation in operations:
         operation = operation.strip()       # Remove extra whitespace so code can filter properly (n/ was an issue).
@@ -172,12 +175,12 @@ def all_operations():
             filter_state(counties, component)
 
         elif "filter-gt" in operation:
-            field = operation.split(":")[1]
+            field = operation.split(":")[1]                         # To visualize ---> operation:field:value --> split(":") --> ['filter-gt', 'field', 'value']
             gt_value = operation.split(":")[2]
             counties = filter_gt(counties, field, gt_value)
 
         elif "filter-lt" in operation:
-            field = operation.split(":")[1]
+            field = operation.split(":")[1]                      # To visualize ---> operation:field:value --> split(":") --> ['filter-gt', 'field', 'value']
             lt_value = operation.split(":")[2]
             counties = filter_lt(counties, field, lt_value)
 
@@ -198,7 +201,8 @@ def all_operations():
             sub_population_total_percent = percent(sub_pop, total_population)
             print("2014" + " " + field + "Population:" + " " + str(sub_population_total_percent))
 
+    return None
 
-
+# Main Module
 if __name__ == "__main__":
     all_operations()
