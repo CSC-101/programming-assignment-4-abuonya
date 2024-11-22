@@ -11,16 +11,20 @@ import argparse
 # Purpose of Function: This function 'display' iterates through the entire list of counties and prints every counties information to the terminal.
 def display(counties:list[CountyDemographics]) -> None:
     for county in counties:
-        print(f"{county.county} {county.age} {county.education} {county.ethnicities} {county.income} {county.state}")
+        print(f"{county.county} {county.age} {county.education} {county.ethnicities} {county.income} {county.state}")  # Prints all county information plainly.
     return None
 
+# Purpose of Function: This function 'filter_state' iterates through the entire list of counties, finds which one matches the specified state abbreviation, and prints how many entries (counties)
+# has that state.
 def filter_state(counties:list[CountyDemographics], state:str) -> None:
-    count = 0
-    for county in counties:
-        if county.state == state:
-            count += 1
-        else:
-            print("There is an issue with your input.")
+    count = 0   # Set 'count' to 0 record every entry that exists within the parameters specified in this function.
+    try:
+        for county in counties:
+            if county.state == state:
+                count += 1
+    except ValueError:  # Catch any errors.
+        print("There was an issue.")
+
     print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries" + ")")
     return None
 
@@ -60,8 +64,9 @@ def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> lis
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return gt_filtered_counties
 
+# Purpose of Function: This function 'filter_lt' takes a list of counties, a field, and a threshold value, 'lt_value.' This narrows the collection of entries to only counties specified by the field.
 def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> list:
-    count = 0
+    count = 0       # Functions the same as filter_gt except for how value is evaluated at the end of the loop.
     lt_filtered_counties = []
     new_lt_value = float(lt_value)
 
@@ -96,8 +101,9 @@ def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> lis
     print("Filter: " + " " + field + " " + "(" + str(count) + " entries" + ")")
     return lt_filtered_counties
 
-def population_total(counties: list) -> float:
-    sum_of_2014_population = 0
+# Purpose of Function: This function 'population_total' takes a list of given counties, iterates through the list for only '2014 Population' values and sums them all together across all counties.
+def population_total(counties:list[CountyDemographics]) -> float:
+    sum_of_2014_population = 0 # To store the sum of the total 2014 population across all counties.
 
     for county in counties:
         temp = county.population['2014 Population']
@@ -105,8 +111,8 @@ def population_total(counties: list) -> float:
 
     return sum_of_2014_population
 
-
-def population(counties, field) -> float:
+# Purpose of Function: This function 'population' takes a list of given counties, iterates through the list for only '2014 Population' values and computes the total subpopulation for 2014 for the given field.
+def population(counties:list[CountyDemographics], field:str) -> float:
     sub_population_total = 0.0
     field_key = field.split(".")
 
@@ -132,11 +138,9 @@ def population(counties, field) -> float:
             sub_population_total += sub_pop_per_county
 
     except (IndexError, KeyError):
-        value = None
         print("There is an issue with your input.")
 
     return sub_population_total
-
 
 def percent(sub_pop, total_population) -> float:
     sub_population_total_percent = (sub_pop / total_population) * 100
