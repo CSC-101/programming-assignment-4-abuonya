@@ -31,11 +31,13 @@ def filter_state(counties:list[CountyDemographics], state:str) -> None:
 def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> list:
     count = 0       # Set variable 'count' to 0 so we can count every entry that exists within the parameters specified in this function.
     gt_filtered_counties = []       # Initiate an empty list to store filtered counties greater than threshold value.
-    new_gt_value = float(gt_value)  # Convert gt_value into a float because text files are automatically strings.
+
+
 
     for county in counties:     # Iterate through list[CountyDemographics] at every index, aka 'county.'
         field_key = field.split(".")   # Split our field into two compare our key-value pairs as we iterate through the list of counties.
         try:
+            new_gt_value = float(gt_value)      # Convert gt_value into a float because text files are automatically strings.
             if len(field_key) > 1:
                 if field_key[0] == 'Age':
                     value = county.age.get(field_key[1])  #.get() to extract our value from our key in the dictionary.
@@ -53,7 +55,7 @@ def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> lis
                     value = county.state.get(field_key[1])
                 else:
                     value = None
-        except (IndexError, KeyError):      # Catch any errors.
+        except (IndexError, KeyError, ValueError):      # Catch any errors.
             value = None
             print("There is an issue with your input.")
 
@@ -148,10 +150,15 @@ def population(counties:list[CountyDemographics], field:str) -> float:
 
 # Purpose of Function: This function 'percent' takes the subpopulation total and converts it into a percent.
 def percent(sub_pop, total_population) -> float:
-    sub_population_total_percent = (sub_pop / total_population) * 100       # Uses helper functions population and population_total for percent computation - refer to all_functions() to see.
-    return sub_population_total_percent
+    try:
+        sub_population_total_percent = (sub_pop / total_population) * 100
+        return sub_population_total_percent      # Uses helper functions population and population_total for percent computation - refer to all_functions() to see.
+    except ZeroDivisionError:
+        print("Cannot do float division for percent function.")
 
-# Compile All Function Into One to check the file for any of these operations.
+
+
+    # Compile All Function Into One to check the file for any of these operations.
 def all_operations() -> None:
     try:
         given_operation = sys.argv[1]           # Take first argument from the command line.
