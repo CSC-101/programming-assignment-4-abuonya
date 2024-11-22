@@ -1,4 +1,6 @@
 import sys
+from typing import List
+
 from data import CountyDemographics
 import build_data
 
@@ -15,24 +17,24 @@ def display(counties:list[CountyDemographics]) -> None:
 
 # Purpose of Function: This function 'filter_state' iterates through the entire list of counties, finds which one matches the specified state abbreviation, and prints how many entries (counties)
 # has that state.
-def filter_state(counties:list[CountyDemographics], state:str) -> None:
-    count = 0   # Set 'count' to 0 record every entry that exists within the parameters specified in this function.
+def filter_state(counties:list[CountyDemographics], state:str) -> list[CountyDemographics]:
+    count = 0 # Set 'count' to 0 record every entry that exists within the parameters specified in this function.
+    filtered_state_list = []
     try:
         for county in counties:
             if county.state == state:
                 count += 1
+                filtered_state_list.append(county)
     except ValueError:  # Catch any errors.
         print("There was an issue.")
 
     print("Filter: state ==" + " " + state + " " + "(" + str(count) + " entries" + ")")
-    return None
+    return filtered_state_list
 
 # Purpose of Function: This function 'filter_gt' takes a list of counties, a field, and a threshold value, 'gt_value.' This narrows the collection of entries to only counties specified by the field.
-def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> list:
+def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> list[CountyDemographics]:
     count = 0       # Set variable 'count' to 0 so we can count every entry that exists within the parameters specified in this function.
     gt_filtered_counties = []       # Initiate an empty list to store filtered counties greater than threshold value.
-
-
 
     for county in counties:     # Iterate through list[CountyDemographics] at every index, aka 'county.'
         field_key = field.split(".")   # Split our field into two compare our key-value pairs as we iterate through the list of counties.
@@ -67,7 +69,7 @@ def filter_gt(counties:list[CountyDemographics], field:str, gt_value:str) -> lis
     return gt_filtered_counties
 
 # Purpose of Function: This function 'filter_lt' takes a list of counties, a field, and a threshold value, 'lt_value.' This narrows the collection of entries to only counties specified by the field.
-def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> list:
+def filter_lt(counties:list[CountyDemographics], field:str, lt_value:str) -> list[CountyDemographics]:
     count = 0       # Functions the same as filter_gt except for how value is evaluated at the end of the loop.
     lt_filtered_counties = []
     new_lt_value = float(lt_value)
@@ -179,7 +181,7 @@ def all_operations() -> None:
 
         elif "filter-state" in operation:
             component = operation.split(":")[1]         # Separate operation from component; filter-state and *state abbr*
-            filter_state(counties, component)
+            counties = filter_state(counties, component)
 
         elif "filter-gt" in operation:
             field = operation.split(":")[1]                         # To visualize ---> operation:field:value --> split(":") --> ['filter-gt', 'field', 'value']
